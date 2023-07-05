@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <!--
     http : 서버가 로그인을 통해 나를 확인 (단방향 인증)
@@ -16,14 +17,16 @@
   <link rel="stylesheet" href="layout.css">
   <title>Document</title>
   <script>
-    $(document).ready(async function(){
-      const pageno=getPageno();
+    $(document).ready(async function () {
+      const pageno = getPageno();
       const result = await fetch(pageno);
-      if(result===null) {
+      if (result === null) {
         alert("서버가 응답하지 않습니다.")
-        location.href="index.html";
+        location.href = "index.html";
       }
-      console.log(result);
+      printContacts(result.contacts);
+      const pagination = getPagination(result);
+      printPagination(pagination);
     })
   </script>
 </head>
@@ -44,13 +47,28 @@
       <a type="button" class="btn btn-outline-primary" href="index.html">HOME</a>
     </nav>
     <main>
-    <aside></aside>
-    <section></section>
-    <aside></aside>
-  </main>
-  <footer>
-    Copyright &copy;2023 ICIA All Right Reserved
-  </footer>
+      <aside></aside>
+      <section>
+        <table class="table table-border">
+          <thead>
+            <tr>
+              <th>번호</th>
+              <th>이름</th>
+              <th>연락처</th>
+              <th>주소</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+          </tbody>
+        </table>
+        <ul id="pagination" class="pagination" style="display:flex; justify-content: center;"></ul>
+      </section>
+      <aside></aside>
+    </main>
+    <footer>
+      Copyright &copy;2023 ICIA All Right Reserved
+    </footer>
   </div>
 </body>
+
 </html>
